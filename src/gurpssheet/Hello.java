@@ -15,7 +15,7 @@ public class Hello {
 	@Path("world")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String helloWorld() {
-		return "{message: 'Hello World'}";
+		return "{\"message\": \"Hello World\"}";
 		
 	}
 

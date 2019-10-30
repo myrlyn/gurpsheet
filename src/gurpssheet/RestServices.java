@@ -39,9 +39,10 @@ public class RestServices extends ResourceConfig{
 		
 	}
 	public RestServices()  {
+		//register rest services for jaxrs
 		packages("com.fasterxml.jackson.jaxrs.json");
+		//register application rest services
 		packages("gurpssheet");
-		//TODO register all packages
 	}
 
 }

@@ -7,7 +7,7 @@
 <title>Start Here</title>
 </head>
 <body>
-<a href="rest/sheets/new">New Blank Sheet</a>
+<a href="rest/sheets/blank">New Blank Sheet</a>
 
 </body>
 </html>

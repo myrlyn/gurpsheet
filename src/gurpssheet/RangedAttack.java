@@ -3,7 +3,7 @@ package gurpssheet;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "melee_attack")
+@DatabaseTable(tableName = "ranged_attack")
 
 public class RangedAttack {
 	@DatabaseField(generatedId = true)
