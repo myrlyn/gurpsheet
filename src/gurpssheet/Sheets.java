@@ -3,6 +3,7 @@ package gurpssheet;
 import java.sql.SQLException;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -18,9 +19,23 @@ import com.j256.ormlite.dao.DaoManager;
 
 public class Sheets {
 	public static Logger LOGGER = LogManager.getLogger(Sheets.class);
-
+	@DELETE
+	@Path("delete")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Boolean deleteCharacterSheet(CharacterSheet cs) {
+		try {
+			Dao<CharacterSheet,Long> csheetDao = DaoManager.createDao(RestServices.dbsrc, CharacterSheet.class);
+			csheetDao.delete(cs);
+		}catch (SQLException e) {
+			LOGGER.error("Could Not Delete Character Sheet",e);
+			return false;
+		}
+		return true;
+	}
+	
 	@POST
-	@Path("new")
+	@Path("new")	
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Boolean saveNewSheet(CharacterSheet cs) {
