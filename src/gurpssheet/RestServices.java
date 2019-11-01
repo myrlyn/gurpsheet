@@ -18,11 +18,13 @@ public class RestServices extends ResourceConfig{
 	protected static  ConnectionSource dbsrc = null;
 	
 	protected static  String dataBaseURL = "jdbc:sqlite:C:/Users/jwalker/sample.db";
-	protected static java.util.logging.Logger logger = java.util.logging.Logger.getLogger("GurpsRestServices");  
+	protected static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger("GurpsRestServices");  
 	static {
 		try {
 			File file = new File("C:/Users/jwalker/sample.db");
-	         file.createNewFile();
+	         if(!file.createNewFile()) {
+	        	 logger.warning("did not create new db");
+	         }
 			dbsrc = new JdbcConnectionSource(dataBaseURL);
 			TableUtils.createTableIfNotExists(dbsrc, SkillContainer.class);
 			TableUtils.createTableIfNotExists(dbsrc, Skill.class);
@@ -31,7 +33,9 @@ public class RestServices extends ResourceConfig{
 			TableUtils.createTableIfNotExists(dbsrc, MeleeAttack.class);
 			TableUtils.createTableIfNotExists(dbsrc, RangedAttack.class);
 			TableUtils.createTableIfNotExists(dbsrc, CharacterSheet.class);
-			
+			TableUtils.createTableIfNotExists(dbsrc, EquipmentContainer.class);
+			TableUtils.createTableIfNotExists(dbsrc, Equipment.class);
+
 		} catch (SQLException | IOException e) {
 			logger.log(Level.SEVERE, "Error opening SQLITE", e);
 		}

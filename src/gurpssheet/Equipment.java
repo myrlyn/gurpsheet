@@ -30,8 +30,8 @@ public class Equipment {
 	@DatabaseField(columnName="container",foreign=true)
 	private EquipmentContainer container;
 
-	@DatabaseField(columnName="character",foreign=true)
-	private CharacterSheet character;
+	@DatabaseField(columnName="character_sheet",foreign=true)
+	private CharacterSheet characterSheet;
 
 	public long getId() {
 		return id;
@@ -96,9 +96,10 @@ public class Equipment {
 	public void setContainer(EquipmentContainer container) {
 		this.container = container;
 	}
-
+	
+	
 	public void setCharacter(CharacterSheet character) {
-		this.character = character;
+		this.characterSheet = character;
 	}
 
 	

@@ -14,28 +14,54 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
 
 @Path("sheets")
 
 public class Sheets {
-	public static Logger LOGGER = LogManager.getLogger(Sheets.class);
+	public static final Logger LOGGER = LogManager.getLogger(Sheets.class);
+	protected static String dataBaseURL = "jdbc:sqlite::memory:";
+	protected static ConnectionSource dbsrc = null;
+	static {
+		try {
+			dbsrc = new JdbcConnectionSource(Sheets.dataBaseURL);
+			TableUtils.dropTable(dbsrc,SkillContainer.class, true);
+			TableUtils.dropTable(dbsrc,Equipment.class, true);
+			TableUtils.createTableIfNotExists(dbsrc, SkillContainer.class);
+			TableUtils.createTableIfNotExists(dbsrc, Skill.class);
+			TableUtils.createTableIfNotExists(dbsrc, AdvantageContainer.class);
+			TableUtils.createTableIfNotExists(dbsrc, Advantage.class);
+			TableUtils.createTableIfNotExists(dbsrc, MeleeAttack.class);
+			TableUtils.createTableIfNotExists(dbsrc, RangedAttack.class);
+			TableUtils.createTableIfNotExists(dbsrc, CharacterSheet.class);
+			TableUtils.createTableIfNotExists(dbsrc, EquipmentContainer.class);
+			TableUtils.createTableIfNotExists(dbsrc, Equipment.class);
+			
+		} catch (SQLException  e) {
+			LOGGER.error("Error opening SQLITE in memory DB", e);
+		}
+
+	}
+
 	@DELETE
 	@Path("delete")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Boolean deleteCharacterSheet(CharacterSheet cs) {
 		try {
-			Dao<CharacterSheet,Long> csheetDao = DaoManager.createDao(RestServices.dbsrc, CharacterSheet.class);
+			Dao<CharacterSheet, Long> csheetDao = DaoManager.createDao(RestServices.dbsrc, CharacterSheet.class);
 			csheetDao.delete(cs);
-		}catch (SQLException e) {
-			LOGGER.error("Could Not Delete Character Sheet",e);
+		} catch (SQLException e) {
+			LOGGER.error("Could Not Delete Character Sheet", e);
 			return false;
 		}
 		return true;
 	}
-	
+
 	@POST
-	@Path("new")	
+	@Path("new")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Boolean saveNewSheet(CharacterSheet cs) {
@@ -63,7 +89,7 @@ public class Sheets {
 		}
 		return true;
 	}
-	
+
 	@PUT
 	@Path("update")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -78,7 +104,7 @@ public class Sheets {
 		}
 		return true;
 	}
-	
+
 	@GET
 	@Path("blank")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -87,7 +113,7 @@ public class Sheets {
 		try {
 			csheetDao = DaoManager.createDao(RestServices.dbsrc, CharacterSheet.class);
 		} catch (SQLException e) {
-			LOGGER.error("Erro Creating Blank Sheet",e);
+			LOGGER.error("Erro Creating Blank Sheet", e);
 			return null;
 		}
 
@@ -162,8 +188,9 @@ public class Sheets {
 			csheetDao.assignEmptyForeignCollection(cs, "advantages");
 			csheetDao.assignEmptyForeignCollection(cs, "melee_attacks");
 			csheetDao.assignEmptyForeignCollection(cs, "ranged_attacks");
+			csheetDao.assignEmptyForeignCollection(cs, "equipment");
 		} catch (SQLException e) {
-			LOGGER.error("Error Populating Blank Sheet",e);
+			LOGGER.error("Error Populating Blank Sheet", e);
 		}
 
 		Skill sk = new Skill();
@@ -188,7 +215,6 @@ public class Sheets {
 		cs.getSkills().add(sk);
 		cs.getSkills().add(csk);
 
-		
 		MeleeAttack ma = new MeleeAttack();
 		ma.setName("A Melee Attack");
 		ma.setDamage("1d-6");
@@ -198,9 +224,9 @@ public class Sheets {
 		ma.setReach("1,C");
 		ma.setSt("1");
 		ma.setUsage("Swing");
-		
+
 		cs.getMeleeAttacks().add(ma);
-		
+
 		RangedAttack ra = new RangedAttack();
 		ra.setName("A Ranged Attack");
 		ra.setBulk("1");
@@ -212,29 +238,29 @@ public class Sheets {
 		ra.setShots("1");
 		ra.setUsage("Thrown");
 		ra.setSt("1");
-		
+
 		cs.getRangedAttacks().add(ra);
-		
+
 		EquipmentContainer ec = new EquipmentContainer();
 		ec.setName("A Bag");
 		ec.setEquipped(true);
 		ec.setNotes("just a bag");
 		ec.setPageRef("-");
-		
+
 		Equipment item = new Equipment();
 		item.setName("stuff");
 		item.setContainer(ec);
 		item.setCost(0.0);
 		item.setEquipped(true);
 		
+		cs.getEquipment().add(item);
 		
 		try {
 			csheetDao.update(cs);
 		} catch (SQLException e) {
-			LOGGER.error("Error Updating Blank Sheet",e);
+			LOGGER.error("Error Updating Blank Sheet", e);
 		}
-		
-		
+
 		return cs;
 	}
 }

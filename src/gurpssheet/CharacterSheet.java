@@ -137,6 +137,14 @@ public class CharacterSheet {
 		return race;
 	}
 
+	public ForeignCollection<Equipment> getEquipment() {
+		return equipment;
+	}
+
+	public void setEquipment(ForeignCollection<Equipment> equipment) {
+		this.equipment = equipment;
+	}
+
 	public void setRace(String race) {
 		this.race = race;
 	}
@@ -732,6 +740,8 @@ public class CharacterSheet {
 	private ForeignCollection<Advantage> advantages = null;
 	@ForeignCollectionField(columnName = "skills",foreignFieldName = "characterSheet",eager=true)
 	private ForeignCollection<Skill> skills = null;
+	@ForeignCollectionField(columnName = "equipment",foreignFieldName = "characterSheet",eager=true)
+	private ForeignCollection<Equipment> equipment = null;
 
 	public long getxHeavyLoad() {
 		return xHeavyLoad;
