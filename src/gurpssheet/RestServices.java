@@ -17,6 +17,18 @@ import com.j256.ormlite.table.TableUtils;
 public class RestServices extends ResourceConfig{
 	protected static  ConnectionSource dbsrc = null;
 	
+	public static ConnectionSource getDbsrc() {
+		return dbsrc;
+	}
+	public static void setDbsrc(ConnectionSource dbsrc) {
+		RestServices.dbsrc = dbsrc;
+	}
+	public static String getDataBaseURL() {
+		return dataBaseURL;
+	}
+	public static void setDataBaseURL(String dataBaseURL) {
+		RestServices.dataBaseURL = dataBaseURL;
+	}
 	protected static  String dataBaseURL = "jdbc:sqlite:C:/Users/jwalker/sample.db";
 	protected static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger("GurpsRestServices");  
 	static {

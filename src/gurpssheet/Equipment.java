@@ -31,11 +31,7 @@ public class Equipment {
 	private EquipmentContainer container;
 
 	@DatabaseField(columnName="character_sheet",foreign=true)
-	private CharacterSheet characterSheet;
-
-	public long getId() {
-		return id;
-	}
+	private transient CharacterSheet characterSheet;
 
 	public void setId(long id) {
 		this.id = id;

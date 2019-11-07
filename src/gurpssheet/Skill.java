@@ -28,14 +28,10 @@ public class Skill {
 	@DatabaseField(columnName = "container",foreign=true)
 	SkillContainer container;
 	@DatabaseField(columnName = "character_sheet",foreign=true)
-	private CharacterSheet characterSheet;
+	private transient CharacterSheet characterSheet;
 
 	public void setCharacterSheet(CharacterSheet characterSheet) {
 		this.characterSheet = characterSheet;
-	}
-
-	public long getId() {
-		return id;
 	}
 
 	public void setId(long id) {

@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 public class Hello {
 
 	public Hello() {
-		// TODO Auto-generated constructor stub
+		// default constructor
 	}
 	@GET
 	@Path("world")

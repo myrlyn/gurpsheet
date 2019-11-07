@@ -13,9 +13,7 @@ public class MeleeAttack {
 	String usage;
 	@DatabaseField(columnName = "level")
 	long level;
-	public long getId() {
-		return id;
-	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -82,9 +80,9 @@ public class MeleeAttack {
 	@DatabaseField(columnName = "st")
 	String st;
 	@DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "character_sheet")
-	CharacterSheet characterSheet;
+	private transient CharacterSheet characterSheet;
 	public MeleeAttack() {
-		// TODO Auto-generated constructor stub
+		// default constructors
 	}
 
 }

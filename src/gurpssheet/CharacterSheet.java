@@ -21,7 +21,7 @@ public class CharacterSheet {
 	 * 
 	 */
 	public CharacterSheet() {
-		// TODO Auto-generated constructor stub
+		// default constructor
 	}
 
 	@DatabaseField(generatedId = true)

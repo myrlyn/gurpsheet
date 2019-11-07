@@ -21,10 +21,6 @@ public class EquipmentContainer {
 	@DatabaseField(columnName="page_ref")
 	private String pageRef;
 
-	public long getId() {
-		return id;
-	}
-
 	public void setId(long id) {
 		this.id = id;
 	}

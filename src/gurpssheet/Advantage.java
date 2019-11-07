@@ -27,8 +27,35 @@ public class Advantage {
 	String pageRef;
 	
 	@DatabaseField(columnName = "character_sheet", foreign=true)
-	CharacterSheet characterSheet;
+	private transient CharacterSheet characterSheet;
 	
+	@DatabaseField(columnName = "notes")
+	String notes;
+	
+	@DatabaseField(columnName = "modifiers")
+	String modifiers;
+	
+	
+	public String getNotes() {
+		return notes;
+	}
+
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+
+	public String getModifiers() {
+		return modifiers;
+	}
+
+
+	public void setModifiers(String modifiers) {
+		this.modifiers = modifiers;
+	}
+
+
 	public long getId() {
 		return id;
 	}
@@ -38,10 +65,6 @@ public class Advantage {
 		this.id = id;
 	}
 
-
-	public void setCharacterSheet(CharacterSheet characterSheet) {
-		this.characterSheet = characterSheet;
-	}
 
 
 	public String getName() {
@@ -105,7 +128,7 @@ public class Advantage {
 
 
 	public Advantage() {
-		// TODO Auto-generated constructor stub
+		// default constructor
 	}
 
 }

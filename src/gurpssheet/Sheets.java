@@ -192,7 +192,23 @@ public class Sheets {
 		} catch (SQLException e) {
 			LOGGER.error("Error Populating Blank Sheet", e);
 		}
-
+		Advantage adv = new Advantage();
+		AdvantageContainer advc = new AdvantageContainer();
+		adv.setContainer(advc);
+		adv.setDescription("Some Advantage is granted");
+		
+		adv.setHasLevels(false);
+		adv.setLevel(0);
+		adv.setName("An Advantage");
+		adv.setPageRef("-");
+		adv.setModifiers("Some Modifier");
+		adv.setNotes("some notes on an advantage");
+		advc.setModifiers("None");
+		advc.setModifiers("Some advantage container modifiers");
+		advc.setNotes("Some advantage container notes");
+		advc.setName("Advantage Container Name");
+		
+		
 		Skill sk = new Skill();
 		sk.name = "New Skill";
 		sk.pageRef = "-";

@@ -18,10 +18,6 @@ public class RangedAttack {
 	int acc;
 	@DatabaseField(columnName = "damage")
 	String damage;
-	public long getId() {
-		return id;
-	}
-
 
 	public void setId(long id) {
 		this.id = id;
@@ -158,11 +154,11 @@ public class RangedAttack {
 	@DatabaseField(columnName = "st")
 	String st;
 	@DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "character_sheet")
-	CharacterSheet characterSheet;	
+	private transient CharacterSheet characterSheet;	
 	
 	
 	public RangedAttack() {
-		// TODO Auto-generated constructor stub
+		// default constructor
 	}
 
 }
