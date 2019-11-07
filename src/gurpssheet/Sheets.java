@@ -75,7 +75,7 @@ public class Sheets {
 		return true;
 	}
 
-	@PUT
+	@POST
 	@Path("save")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -90,7 +90,7 @@ public class Sheets {
 		return true;
 	}
 
-	@PUT
+	@POST
 	@Path("update")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
