@@ -3,6 +3,7 @@
  * element and do not have to do lookups
  */
 let skillLines = 0
+let advantageLines = 0
 let f = document.createElement("form")
 f.id = "charForm"
 f.name = "charForm"
@@ -20,6 +21,19 @@ let textN = []
 let skillLabels = []
 let skillPts = []
 let skillPageRef = []
+
+let advantageNames = []
+let advantageHasLevels = []
+let advantageLevels = []
+let advantageDescription = []
+let advantagePageRef = []
+let advantageNotes = []
+let advantageModifiers = []
+let advantageTextNodes = []
+let advCheckboxTextNodes = []
+let advCheckboxLabels = []
+let advantageLineBreak = []
+
 let s = document.createElement("input") // input element, Submit button
 s.setAttribute('type', "submit")
 s.setAttribute('value', "Submit")
@@ -30,10 +44,26 @@ asb.setAttribute('type', "submit")
 asb.setAttribute('value', "Add Skill Row")
 asb.id = "addSkillButton"
 
+let addAdvantageButton = document.createElement("input")
+addAdvantageButton.setAttribute('type', "submit")
+addAdvantageButton.setAttribute('value', "Add Advantage Row")
+addAdvantageButton.id = "addAdvantageButton"
+
+let sle = document.createElement("br")
+sle.id = "skillLineEnd"
+
+let advantageLineEnd = document.createElement("br")
+advantageLineEnd.id = "advantageLineEnd"
+
 f.appendChild(s)
+f.insertBefore(sle, s)
+f.insertBefore(advantageLineEnd, sle)
+
 f.appendChild(asb)
+f.appendChild(addAdvantageButton)
 s.addEventListener("click", saveCharacter, false)
 asb.addEventListener("click", addSkillLine, false)
+addAdvantageButton.addEventListener("click", addAdvantageLine, false)
 document.getElementsByTagName('body')[0].appendChild(f)
 
 function saveCharacter(event) {
@@ -44,6 +74,60 @@ function saveCharacter(event) {
 	// xhttp.send()
 	// $.post('rest/sheets/save',data,function(response){ }, 'json')
 	event.preventDefault()
+}
+function addAdvantageLine(event) {
+	document.bgColor = "#780078"
+	event.preventDefault()
+	
+	advantageTextNodes[advantageLines] = document.createTextNode("Advantage")
+
+	advantageNames[advantageLines] = document.createElement("input")
+	advantageNames[advantageLines].type = "text"
+	advantageNames[advantageLines].name = `advantageNames[${advantageLines}]`
+	advantageNames[advantageLines].id = `advantageNames[${advantageLines}]`
+	advantageNames[advantageLines].value = "Advantage Name"
+
+	advantagePageRef[advantageLines] = document.createElement("input")
+	advantagePageRef[advantageLines].type = "text"
+	advantagePageRef[advantageLines].name = `advantageNames[${advantageLines}]`
+	advantagePageRef[advantageLines].id = `advantageNames[${advantageLines}]`
+	advantagePageRef[advantageLines].value = "Page Reference"
+
+	advantageHasLevels[advantageLines] = document.createElement("input")
+	advantageHasLevels[advantageLines].type = "checkbox"
+	advantageHasLevels[advantageLines].name = `advantageHasLevels[${advantageLines}]`
+	advantageHasLevels[advantageLines].id = `advantageHasLevels[${advantageLines}]`
+
+	advantageNotes[advantageLines] = document.createElement("input")
+	advantageNotes[advantageLines].type = "text"
+	advantageNotes[advantageLines].name = `advantageNotes[${advantageLines}]`
+	advantageNotes[advantageLines].id = `advantageNotes[${advantageLines}]`
+	advantageNotes[advantageLines].value = "notes"
+
+	advantageModifiers[advantageLines] = document.createElement("input")
+	advantageModifiers[advantageLines].type = "text"
+	advantageModifiers[advantageLines].name = `advantageModifiers[${advantageLines}]`
+	advantageModifiers[advantageLines].id = `advantageModifiers[${advantageLines}]`
+	advantageModifiers[advantageLines].value = "modifiers"
+
+	advantageLevels[advantageLines] = document.createElement("input")
+	advantageLevels[advantageLines].type = "text"
+	advantageLevels[advantageLines].name = `advantageLevels[${advantageLines}]`
+	advantageLevels[advantageLines].id = `advantageLevels[${advantageLines}]`
+	advantageLevels[advantageLines].value = "Levels"
+		
+	advCheckboxTextNodes[advantageLines] = document
+			.createTextNode("Has Levels?")
+	advCheckboxLabels[advantageLines] = document.createElement("label")
+	advCheckboxLabels[advantageLines].setAttribute('for',
+			advantageHasLevels[advantageLines])
+
+	advCheckboxLabels[advantageLines] = document.createElement("label")
+	advantageLineBreak[advantageLines] = document.createElement("br")
+	f.insertBefore(advantageLineBreak[advantageLines],advantageLineEnd)
+	f.insertBefore(advantageTextNodes[advantageLines],advantageLineBreak[advantageLines])
+	advantageLines++
+	
 }
 
 function addSkillLine(event) {
@@ -85,8 +169,8 @@ function addSkillLine(event) {
 	skillPageRef[skillLines].name = `skillPageRef[${skillLines}]`
 	skillPageRef[skillLines].id = `skillPageRef[${skillLines}]`
 	skillPageRef[skillLines].value = "Page Reference"
-	
-	f.insertBefore(skillValues[skillLines], s)
+
+	f.insertBefore(skillValues[skillLines], skillLineEnd)
 	f.insertBefore(skillNames[skillLines], skillValues[skillLines])
 	f.insertBefore(skillLabels[skillLines], skillNames[skillLines])
 	f.insertBefore(skillRsls[skillLines], skillValues[skillLines])
